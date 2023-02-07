@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @AllArgsConstructor
 @Slf4j
 public class CrmRestController {
 
-    private CrmServices crmServices ;
+     private CrmServices crmServices ;
 
     @GetMapping("/ping")
     public String ping(){
@@ -22,10 +24,18 @@ public class CrmRestController {
          return crmServices.ping();
     }
 
-    @GetMapping("/product")
-    public Product getProduct(){
+    @GetMapping("/products")
+    public List<Product> getProducts(){
         log.info("The end point product has been used");
-      return crmServices.getProduct();
+      return crmServices.getProducts();
     }
+
+    @GetMapping("/product")
+    public  Product  getProduct(){
+        log.info("The end point product has been used");
+        return crmServices.getProduct(1);
+    }
+
+
 
 }
