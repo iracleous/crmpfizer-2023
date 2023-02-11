@@ -1,15 +1,19 @@
 package gr.codehub.crmpfizer2023.service;
 
-import gr.codehub.crmpfizer2023.model.Product;
+import gr.codehub.crmpfizer2023.model.Customer;
 
 import java.util.List;
 
 public interface CrmServices {
-      Product getProduct(int k);
 
-      Product createProduct(String productName);
+      // Customer CRUD
 
 
-      List<Product> getProducts();
+    Customer createCustomer(Customer customer);
+    List<Customer>  readCustomer();
+    Customer readCustomer(int id);
+    Customer updateCustomer(Customer customer, int id);
+    boolean deleteCustomer(int id) ;
+
       String ping();
  }
