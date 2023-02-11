@@ -1,5 +1,6 @@
 package gr.codehub.crmpfizer2023.service;
 
+import gr.codehub.crmpfizer2023.exception.CrmException;
 import gr.codehub.crmpfizer2023.model.Customer;
 import gr.codehub.crmpfizer2023.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class CrmServImpl implements CrmServices{
@@ -24,18 +27,39 @@ private final CustomerRepository customerRepository;
     }
 
     @Override
-    public Customer readCustomer(int id) {
-        return null;
+    public Customer readCustomer(int id) throws CrmException {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        if (customerOptional.isPresent())
+            return customerOptional.get();
+        throw new CrmException("Customer not found id= " + id);
     }
 
     @Override
-    public Customer updateCustomer(Customer customer, int id) {
-        return null;
+    public boolean updateCustomer(Customer customer, int id) {
+        boolean action;
+        try {
+            Customer dbCustomer = readCustomer(id);
+            dbCustomer.setName(customer.getName());
+            dbCustomer.setEmail(customer.getEmail());
+            customerRepository.save(dbCustomer);
+            action = true;
+        } catch (CrmException e) {
+            action = false;
+        }
+       return action;
     }
 
     @Override
     public boolean deleteCustomer(int id) {
-        return false;
+        boolean action;
+        try {
+            Customer dbCustomer = readCustomer(id);
+            customerRepository.delete(dbCustomer);
+            action = true;
+        } catch (CrmException e) {
+            action = false;
+        }
+        return action;
     }
 
     @Override
