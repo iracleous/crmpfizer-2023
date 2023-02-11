@@ -1,22 +1,26 @@
 package gr.codehub.crmpfizer2023.service;
 
 import gr.codehub.crmpfizer2023.model.Customer;
+import gr.codehub.crmpfizer2023.repository.CustomerRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
+@AllArgsConstructor
 public class CrmServImpl implements CrmServices{
 
+private final CustomerRepository customerRepository;
 
     @Override
     public Customer createCustomer(Customer customer) {
-        return null;
+        return customerRepository.save(customer);
     }
 
     @Override
     public List<Customer> readCustomer() {
-        return null;
+        return customerRepository.findAll();
     }
 
     @Override
@@ -36,6 +40,6 @@ public class CrmServImpl implements CrmServices{
 
     @Override
     public String ping() {
-        return null;
+        return "hello Pfizer CDI";
     }
 }

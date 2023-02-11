@@ -1,11 +1,14 @@
 package gr.codehub.crmpfizer2023.controller;
 
+import gr.codehub.crmpfizer2023.model.Customer;
 import gr.codehub.crmpfizer2023.model.Product;
 import gr.codehub.crmpfizer2023.service.CrmServices;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,16 +27,16 @@ public class CrmRestController {
          return crmServices.ping();
     }
 
-    @GetMapping("/products")
-    public List<Product> getProducts(){
-        log.info("The end point product has been used");
-      return crmServices.getProducts();
+    @GetMapping("/customer")
+    public List<Customer> getCustomer(){
+        log.info("The end point customer has been used");
+      return crmServices.readCustomer();
     }
 
-    @GetMapping("/product")
-    public  Product  getProduct(){
+    @PostMapping("/customer")
+    public  Customer createCustomer(@RequestBody Customer customer){
         log.info("The end point product has been used");
-        return crmServices.getProduct(1);
+        return crmServices.createCustomer(customer);
     }
 
 
