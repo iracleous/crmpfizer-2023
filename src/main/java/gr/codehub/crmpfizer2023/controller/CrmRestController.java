@@ -1,14 +1,12 @@
 package gr.codehub.crmpfizer2023.controller;
 
+import gr.codehub.crmpfizer2023.dto.CustomerDto;
 import gr.codehub.crmpfizer2023.exception.CrmException;
-import gr.codehub.crmpfizer2023.model.Customer;
-import gr.codehub.crmpfizer2023.model.Product;
 import gr.codehub.crmpfizer2023.service.CrmServices;
-import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -26,32 +24,32 @@ public class CrmRestController {
          return crmServices.ping();
     }
 
-    @GetMapping("/customer")
-    public List<Customer> getCustomer(){
-        log.info("The end point customer has been used");
+    @GetMapping("/Customer")
+    public List<CustomerDto> getCustomerDto(){
+        log.info("The end point CustomerDto has been used");
       return crmServices.readCustomer();
     }
 
-    @GetMapping("/customer/{id}")
-    public Customer getCustomer(@PathVariable(name="id") int id) throws CrmException {
-        log.info("The end point customer has been used");
+    @GetMapping("/Customer/{id}")
+    public CustomerDto getCustomerDto(@PathVariable(name="id") int id) throws CrmException {
+        log.info("The end point CustomerDto has been used");
         return crmServices.readCustomer(id);
     }
 
-    @PostMapping("/customer")
-    public  Customer createCustomer(@RequestBody Customer customer){
+    @PostMapping("/Customer")
+    public  CustomerDto createCustomerDto(@RequestBody CustomerDto CustomerDto){
         log.info("The end point product has been used");
-        return crmServices.createCustomer(customer);
+        return crmServices.createCustomer(CustomerDto);
     }
 
-    @PutMapping("/customer/{id}")
-    public boolean updateCustomer(@RequestBody Customer customer,
+    @PutMapping("/Customer/{id}")
+    public boolean updateCustomerDto(@RequestBody CustomerDto CustomerDto,
                                   @PathVariable(name="id") int id){
-        return crmServices.updateCustomer(customer, id);
+        return crmServices.updateCustomer(CustomerDto, id);
     }
 
-    @DeleteMapping("/customer/{id}")
-    public boolean deleteCustomer(@PathVariable(name="id") int id){
+    @DeleteMapping("/Customer/{id}")
+    public boolean deleteCustomerDto(@PathVariable(name="id") int id){
         return crmServices.deleteCustomer(id);
     }
 

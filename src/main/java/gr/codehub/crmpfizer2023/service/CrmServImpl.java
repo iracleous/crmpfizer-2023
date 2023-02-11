@@ -1,5 +1,6 @@
 package gr.codehub.crmpfizer2023.service;
 
+import gr.codehub.crmpfizer2023.dto.CustomerDto;
 import gr.codehub.crmpfizer2023.exception.CrmException;
 import gr.codehub.crmpfizer2023.model.Customer;
 import gr.codehub.crmpfizer2023.repository.CustomerRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -17,28 +19,38 @@ public class CrmServImpl implements CrmServices{
 private final CustomerRepository customerRepository;
 
     @Override
-    public Customer createCustomer(Customer customer) {
-        return customerRepository.save(customer);
+    public CustomerDto createCustomer(CustomerDto customerDto) {
+        //validation
+        Customer customer = customerDto.asCustomer();
+        return new CustomerDto(customerRepository.save(customer)) ;
+   }
+
+    @Override
+    public List<CustomerDto> readCustomer() {
+        return customerRepository
+                .findAll()
+                .stream()
+                .map(CustomerDto::new)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Customer> readCustomer() {
-        return customerRepository.findAll();
+    public CustomerDto readCustomer(int id) throws CrmException {
+            return new CustomerDto( readCustomerDb(id));
     }
 
-    @Override
-    public Customer readCustomer(int id) throws CrmException {
+    private Customer readCustomerDb(int id) throws CrmException {
         Optional<Customer> customerOptional = customerRepository.findById(id);
         if (customerOptional.isPresent())
-            return customerOptional.get();
+            return   customerOptional.get() ;
         throw new CrmException("Customer not found id= " + id);
     }
 
     @Override
-    public boolean updateCustomer(Customer customer, int id) {
+    public boolean updateCustomer(CustomerDto customer, int id) {
         boolean action;
         try {
-            Customer dbCustomer = readCustomer(id);
+            Customer dbCustomer = readCustomerDb(id);
             dbCustomer.setName(customer.getName());
             dbCustomer.setEmail(customer.getEmail());
             customerRepository.save(dbCustomer);
@@ -53,7 +65,7 @@ private final CustomerRepository customerRepository;
     public boolean deleteCustomer(int id) {
         boolean action;
         try {
-            Customer dbCustomer = readCustomer(id);
+            Customer dbCustomer = readCustomerDb(id);
             customerRepository.delete(dbCustomer);
             action = true;
         } catch (CrmException e) {
