@@ -1,36 +1,34 @@
 package gr.codehub.crmpfizer2023.model;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
-
-@Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+@Data
+public class Basket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int code;
-    private String name;
-    private BigDecimal price;
+    private int id;
 
-    @OneToMany(mappedBy = "product")
+    private LocalDateTime date;
+
+    @JsonIgnore
+    @ManyToOne
+    private Customer customer;
+
+    @OneToMany(mappedBy = "basket")
     private List<BasketProduct> basketProductList;
-
 }
