@@ -20,6 +20,7 @@ public class Customer {
     private String name;
     private String email;
 
+    private CustomerType customerType;
     private LocalDate registrationDate;
 
     @OneToMany(mappedBy = "customer")
