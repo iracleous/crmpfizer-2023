@@ -30,12 +30,12 @@ public class BasketController {
     }
 
     @PostMapping("basket/customer/{customerId}")
-    boolean createBasket(@PathVariable int customerId){
+    int createBasket(@PathVariable int customerId){
         return basketService.createBasket(customerId);
     }
 
     @PostMapping("basket/{basketId}/product/{productId}")
-    boolean addProductToBasket(@PathVariable int productId, @PathVariable int basketId){
+    int addProductToBasket(@PathVariable int productId, @PathVariable int basketId){
         return basketService.addProductToBasket(productId,   basketId);
     }
 

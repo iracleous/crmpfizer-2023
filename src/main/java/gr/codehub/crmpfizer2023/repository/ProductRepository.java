@@ -12,4 +12,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query(value = "Select p from Product p where p.id = :productId")
     List<Product> findAllProductExclude(int productId);
+
+    List<Product> findAllByNameContaining(String name);
 }

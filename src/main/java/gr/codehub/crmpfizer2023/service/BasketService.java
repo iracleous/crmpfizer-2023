@@ -7,8 +7,8 @@ import java.util.List;
 public interface BasketService {
     ProductDto createProduct(ProductDto product);
     List<ProductDto> findProduct(String name);
-    boolean createBasket(int customerId);
-    boolean addProductToBasket(int productId, int basketId);
+    int createBasket(int customerId);
+    int addProductToBasket(int productId, int basketId);
 
     List<String> getBasketProductNames(int basketId);
 }
