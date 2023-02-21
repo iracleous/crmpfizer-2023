@@ -1,6 +1,7 @@
 package gr.codehub.crmpfizer2023.service;
 
-import gr.codehub.crmpfizer2023.configuration.ProductMapper;
+
+
 import gr.codehub.crmpfizer2023.dto.ProductDto;
 import gr.codehub.crmpfizer2023.model.Basket;
 import gr.codehub.crmpfizer2023.model.Customer;
@@ -9,6 +10,7 @@ import gr.codehub.crmpfizer2023.repository.BasketRepository;
 import gr.codehub.crmpfizer2023.repository.CustomerRepository;
 import gr.codehub.crmpfizer2023.repository.ProductRepository;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,12 +24,12 @@ public class BasketServiceImpl implements BasketService{
     private ProductRepository productRepository;
     private BasketRepository basketRepository;
     private CustomerRepository customerRepository;
-    private ProductMapper mapper;
+    private ModelMapper mapper;
 
     @Override
     public ProductDto createProduct(ProductDto productDto) {
-        Product product = mapper.asProduct(productDto);
-        return mapper.asProductDto(productRepository.save(product));
+        Product product = mapper.map(productDto, Product.class);
+        return mapper.map(productRepository.save(product), ProductDto.class);
     }
 
     @Override
@@ -35,7 +37,7 @@ public class BasketServiceImpl implements BasketService{
         return productRepository
                 .findAllByNameContaining(name)
                 .stream()
-                .map(product-> mapper.asProductDto(product))
+                .map(product-> mapper.map(product, ProductDto.class))
                 .collect(Collectors.toList());
     }
 
