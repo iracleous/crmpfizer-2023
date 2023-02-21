@@ -1,27 +1,25 @@
 package gr.codehub.crmpfizer2023.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Setter
 @Getter
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-public class Product {
+public class Basket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
-    private String description;
-    private BigDecimal price;
+    private LocalDate date;
+    @ManyToOne
+    private Customer customer;
+    @ManyToOne
+    private Employee employee;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "basket")
     private List<ProductBasket> productBaskets;
 }
