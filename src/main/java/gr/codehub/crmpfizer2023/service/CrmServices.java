@@ -9,13 +9,12 @@ import java.util.List;
 public interface CrmServices {
 
       // Customer CRUD
-
-
     CustomerDto createCustomer(CustomerDto customer);
     List<CustomerDto>  readCustomer();
+    List<CustomerDto> readCustomerByEmailNativeService(String match);
     CustomerDto readCustomer(int id) throws CrmException;
     boolean updateCustomer(CustomerDto customer, int id);
     boolean deleteCustomer(int id) ;
 
-      String ping();
+    String ping();
  }

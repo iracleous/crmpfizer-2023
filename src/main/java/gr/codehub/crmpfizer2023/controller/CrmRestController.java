@@ -30,6 +30,12 @@ public class CrmRestController {
       return crmServices.readCustomer();
     }
 
+    @GetMapping("/email/{match}")
+    public List<CustomerDto> readCustomerByEmailNative(@PathVariable("match") String match) {
+        log.info("The end point email/{match} has been used");
+        return crmServices.readCustomerByEmailNativeService(match);
+    }
+
     @GetMapping("/Customer/{id}")
     public CustomerDto getCustomerDto(@PathVariable(name="id") int id) throws CrmException {
         log.info("The end point CustomerDto has been used");

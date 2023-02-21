@@ -5,7 +5,7 @@ import gr.codehub.crmpfizer2023.exception.CrmException;
 import gr.codehub.crmpfizer2023.model.Customer;
 import gr.codehub.crmpfizer2023.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,16 +14,17 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class CrmServImpl implements CrmServices{
+public class CrmServImpl implements CrmServices {
 
-private final CustomerRepository customerRepository;
+    @Autowired
+    private final CustomerRepository customerRepository;
 
     @Override
     public CustomerDto createCustomer(CustomerDto customerDto) {
         //validation
         Customer customer = customerDto.asCustomer();
-        return new CustomerDto(customerRepository.save(customer)) ;
-   }
+        return new CustomerDto(customerRepository.save(customer));
+    }
 
     @Override
     public List<CustomerDto> readCustomer() {
@@ -35,14 +36,24 @@ private final CustomerRepository customerRepository;
     }
 
     @Override
+    public List<CustomerDto> readCustomerByEmailNativeService(String match) {
+        return customerRepository
+                .findCustomerByEmailNative(match)
+                .stream()
+                //.map(c -> new CustomerDto(c))
+                .map(CustomerDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public CustomerDto readCustomer(int id) throws CrmException {
-            return new CustomerDto( readCustomerDb(id));
+        return new CustomerDto(readCustomerDb(id));
     }
 
     private Customer readCustomerDb(int id) throws CrmException {
         Optional<Customer> customerOptional = customerRepository.findById(id);
         if (customerOptional.isPresent())
-            return   customerOptional.get() ;
+            return customerOptional.get();
         throw new CrmException("Customer not found id= " + id);
     }
 
@@ -58,7 +69,7 @@ private final CustomerRepository customerRepository;
         } catch (CrmException e) {
             action = false;
         }
-       return action;
+        return action;
     }
 
     @Override

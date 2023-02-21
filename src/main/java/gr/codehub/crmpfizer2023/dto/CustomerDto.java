@@ -16,21 +16,22 @@ public class CustomerDto {
     private String email;
     private LocalDate registrationDate;
 
-    public CustomerDto(Customer customer){
-        if (customer!= null){
+    public CustomerDto(Customer customer) {
+        if (customer != null) {
             id = customer.getId();
             name = customer.getName();
             email = customer.getEmail();
             registrationDate = customer.getRegistrationDate();
         }
     }
-   public Customer asCustomer(){
+
+    public Customer asCustomer() {
         Customer customer = new Customer();
         customer.setId(id);
         customer.setName(name);
         customer.setEmail(email);
         customer.setRegistrationDate(registrationDate);
         return customer;
-   }
+    }
 
 }
