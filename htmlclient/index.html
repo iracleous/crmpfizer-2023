@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="result"></div>
+<div id="rester"></div>
+<input type = "button" value="ajax" onclick="myCall()">
+
+<script>
+    function myCall(){
+        const url = "http://localhost:9000/Customer"
+        let postObj = {
+            name: 'dimitris',
+            email: 'dimitris@gmail.com',
+            registrationDate: '2023-01-12'
+        }
+        let post = JSON.stringify(postObj)
+        fetch(url, {    method: 'post',
+                        body: post,
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                 })
+            .then( (response) =>  {
+                document.getElementById("rester").innerHTML= response.status;
+                return response.json() }  )
+            .then( (res) => {
+                        document.getElementById("result").innerHTML=  JSON.stringify(res);
+                             })
+            .catch((error) => {
+                document.getElementById("result").innerHTML=  error;
+        })
+    }
+</script>
+
+</body>
+</html>

@@ -5,6 +5,7 @@ import gr.codehub.crmpfizer2023.model.CustomerType;
 import gr.codehub.crmpfizer2023.model.Product;
 import gr.codehub.crmpfizer2023.repository.CustomerRepository;
 import gr.codehub.crmpfizer2023.repository.ProductRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Configuration
+@Slf4j
 public class InitialConfiguration {
 
     @Bean
@@ -36,9 +38,9 @@ public class InitialConfiguration {
             // prodRepository.saveAll(List.of(product1, product2));
 
 
-            System.out.println(product1);
-            System.out.println(product3);
-            System.out.println(product4);
+            log.info(product1.toString());
+            log.info(product3.toString());
+            log.info(product4.toString());
 
         };
     }
